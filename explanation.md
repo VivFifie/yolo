@@ -214,3 +214,16 @@ docker exec -it yolo-mongo mongo
 use yolo-db
 
 db.products.find().pretty()
+
+#Final merge of feature brnach with master:
+
+git branch : To check current working branch
+
+* feature/my_new_dockerfiles
+  master
+
+git checkout master : Switch back to master
+
+git merge feature/my_new_dockerfiles : Merge feature branch with master
+
+git push origin master : Push changes to master
