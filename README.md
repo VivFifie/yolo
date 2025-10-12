@@ -1,15 +1,16 @@
-# Overview
-This project involved the containerization and deployment of a full-stack yolo application using Docker.
+#Description:
+
+This README describes how to run the containerized yolo project:
+
+The project has three services: yolo-backend,yolo-client and a mongo database yolo-mongo. The project is orchestrated using Docker
+
+#Preriquisties:
+
+Requires docker to be up anf running locally.Incase you do not have docker please install from:
+
+https://docs.docker.com/
 
 
-# Requirements
-Install the docker engine here:
-- [Docker](https://docs.docker.com/engine/install/) 
+# To run the application:
 
-## How to launch the application 
-
-
-![Alt text](image.png)
-
-## How to run the app
-Use vagrant up --provison command
+docker compose up
