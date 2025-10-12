@@ -191,6 +191,26 @@ docker compose up
 
 docker ps 
 
-#Stop services:
+#Test running of the website.Image has been attached.
+
+http://localhost:3000
+
+# Stop services:
 
 docker compose down -v
+
+# Test Product Addition:
+
+From the website 
+
+http://localhost:3000
+
+Click on Add product and proceed to add a product. I added 2. Image of output is attached.
+
+To confrim the same from the database:
+
+docker exec -it yolo-mongo mongo
+
+use yolo-db
+
+db.products.find().pretty()
