@@ -1,4 +1,4 @@
-This README describes how to get the vivfifie/yolo backend image up and runninging:
+This README describes how to get the vivfifie/yolo backend image up and running:
 
 To install dependencies
 
@@ -14,12 +14,10 @@ http://localhost:5000
 
 To get the container up on docker:
 
-Build the image:
+To build the image:
 
-docker build -t vivfifie/yolo-backend:v1.0.0 .
+docker build -t vivfifie/yolo:v1.0.0 .
 
 Then run the container:
 
-docker run -p 5000:5000 vivfifie/yolo-backend:v1.0.0
-
-
+docker run -d -p 5000:5000 vivfifie/yolo:v1.0.0 
