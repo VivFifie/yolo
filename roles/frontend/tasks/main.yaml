@@ -1,0 +1,9 @@
+---
+- name: Start Frontend container
+  block:
+    - name: Run frontend container
+      community.docker.docker_compose_v2:
+        project_src: "/home/vagrant/yolo"
+        state: present
+        services: "yolo-client"
+  tags: frontend

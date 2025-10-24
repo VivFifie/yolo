@@ -1,0 +1,16 @@
+---
+- name: Clone VivFifie/yolo repo
+  block:
+
+    - name: Confirm location to clone exists
+      file:
+        path: /home/vagrant/yolo
+        state: directory
+
+    - name: Clone repo
+      git:
+        repo: "https://github.com/VivFifie/yolo.git"
+        dest: "/home/vagrant/yolo"
+        version: "master"
+        force: yes
+  tags: clone

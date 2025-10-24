@@ -1,0 +1,8 @@
+app_repo: "https://github.com/VivFifie/yolo.git"
+app_branch: "master"
+project_dir: "/home/vagrant/yolo"
+
+# Docker Compose service names
+frontend_service: "frontend"
+backend_service: "backend"
+database_service: "database"

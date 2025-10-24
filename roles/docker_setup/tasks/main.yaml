@@ -1,0 +1,36 @@
+---
+- name: Ensure required packages are installed
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - software-properties-common
+      - gnupg
+      - lsb-release
+    state: present
+    update_cache: yes
+
+- name: Check if Docker CLI is installed
+  command: docker --version
+  register: docker_cli
+  ignore_errors: yes
+
+- name: Install Docker if not present
+  shell: |
+    curl -fsSL https://get.docker.com -o get-docker.sh
+    sh get-docker.sh
+  when: docker_cli.failed
+
+- name: Ensure docker-compose plugin is available
+  command: docker compose version
+  register: docker_compose_cli
+  ignore_errors: yes
+
+- name: Install docker-compose plugin if missing
+  shell: |
+    DOCKER_CONFIG=${DOCKER_CONFIG:-$HOME/.docker}
+    mkdir -p $DOCKER_CONFIG/cli-plugins
+    curl -SL https://github.com/docker/compose/releases/download/v2.40.2/docker-compose-linux-aarch64 -o $DOCKER_CONFIG/cli-plugins/docker-compose
+    chmod +x $DOCKER_CONFIG/cli-plugins/docker-compose
+  when: docker_compose_cli.failed

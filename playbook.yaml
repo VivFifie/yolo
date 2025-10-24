@@ -1,0 +1,31 @@
+---
+- name: Stage_1
+  hosts: all
+  become: true
+  vars_files:
+    - group_vars/git.yaml
+
+  tasks:
+    - name: Test Connectivity
+      ping:
+
+    - name: Ensure project dir exists
+      file:
+            path: "{{ project_dir }}"
+            state: directory 
+
+  roles:
+    - role: clone_repo
+      tags: clone
+
+    - role: docker_setup
+      tags: docker
+
+    - role: backend
+      tags: backend
+
+    - role: frontend
+      tags: frontend
+
+    - role: database
+      tags: database

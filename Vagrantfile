@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
-  config.vm.box = "ubuntu/focal64"
+  config.vm.box = "perk/ubuntu-2204-arm64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -24,6 +24,9 @@ Vagrant.configure("2") do |config|
   # accessing "localhost:8080" will access port 80 on the guest machine.
   # NOTE: This will enable public access to the opened port
   # config.vm.network "forwarded_port", guest: 80, host: 8080
+   config.vm.network "forwarded_port", guest: 3000, host: 3000
+   config.vm.network "forwarded_port", guest: 5000, host: 5000
+   config.vm.network "forwarded_port", guest: 27017, host: 27017
 
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine and only allow access
@@ -45,6 +48,13 @@ Vagrant.configure("2") do |config|
   # argument is a set of non-required options.
   # config.vm.synced_folder "../data", "/vagrant_data"
 
+  # Disable the default share of the current code directory. Doing this
+  # provides improved isolation between the vagrant box and your host
+  # by making sure your Vagrantfile isn't accessible to the vagrant box.
+  # If you use this you may want to enable additional shared subfolders as
+  # shown above.
+  # config.vm.synced_folder ".", "/vagrant", disabled: true
+
   # Provider-specific configuration so you can fine-tune various
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
@@ -55,7 +65,10 @@ Vagrant.configure("2") do |config|
   #
   #   # Customize the amount of memory on the VM:
   #   vb.memory = "1024"
-  # end
+   config.vm.provider "qemu" do |qemu|
+    qemu.memory = 2048
+    qemu.cpus = 2
+   end
   #
   # View the documentation for the provider you are using for more
   # information on available options.
@@ -67,9 +80,8 @@ Vagrant.configure("2") do |config|
   #   apt-get update
   #   apt-get install -y apache2
   # SHELL
-  # Provisioning configuration for Ansible.
-config.vm.provision "ansible" do |ansible|
-  ansible.playbook = "playbook.yml"
-config.vm.network "forwarded_port", guest: 3000, host: 3000  
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yaml"
+    ansible.verbose = "vvv"
   end
 end
