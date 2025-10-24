@@ -1,0 +1,11 @@
+---
+- name: Start Backend container
+  block:
+    - name: Run backend container
+      community.docker.docker_compose_v2:
+        project_src: "{{ project_dir }}"
+        state: present
+        services: "yolo-backend"
+      become: true
+      become_user: vagrant
+  tags: backend

@@ -1,0 +1,9 @@
+---
+- name: Start Database container
+  block:
+    - name: Run database container
+      community.docker.docker_compose_v2:
+        project_src: "/home/vagrant/yolo"
+        state: present
+        services: "mongo"
+  tags: database

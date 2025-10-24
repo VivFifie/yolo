@@ -9,9 +9,23 @@
     - name: Test Connectivity
       ping:
 
+    - name: Ensure project dir exists
+      file:
+            path: "{{ project_dir }}"
+            state: directory 
+
   roles:
-    - role: docker_install
-    - role: repo_clone
-    - role: frontend
+    - role: clone_repo
+      tags: clone
+
+    - role: docker_setup
+      tags: docker
+
     - role: backend
+      tags: backend
+
+    - role: frontend
+      tags: frontend
+
     - role: database
+      tags: database
