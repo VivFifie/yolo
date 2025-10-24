@@ -1,7 +1,17 @@
 ---
-- name: Test connectivity to all hosts
+- name: Stage_1
   hosts: all
+  become: true
+  vars_files:
+    - group_vars/git.yaml
 
   tasks:
     - name: Test Connectivity
       ping:
+
+  roles:
+    - role: docker_install
+    - role: repo_clone
+    - role: frontend
+    - role: backend
+    - role: database
