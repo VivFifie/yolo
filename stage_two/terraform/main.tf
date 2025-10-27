@@ -6,6 +6,9 @@ provider "local" {}
 
 resource "null_resource" "provision_vagrant" {
 
+ #Force terraform to run vagrant up
+  triggers = {always_run = timestamp()}
+
   # Create VM using the existing Vagrantfile
   provisioner "local-exec" {
     command = "vagrant up"
