@@ -9,7 +9,7 @@
       - gnupg
       - lsb-release
     state: present
-    update_cache: no
+    update_cache: yes
 
 - name: Check if Docker CLI is installed
   command: docker --version

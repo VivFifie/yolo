@@ -1,0 +1,39 @@
+---
+- name: Provision infrastructure using Terraform
+  hosts: localhost
+  connection: local
+  gather_facts: false
+
+  vars:
+    terraform_dir: "{{ playbook_dir }}/terraform"
+
+  tasks:
+    - name: Initialize Terraform
+      community.general.terraform:
+        project_path: "{{ terraform_dir }}"
+        state: present
+        force_init: true
+
+    - name: Apply Terraform configuration
+      community.general.terraform:
+        project_path: "{{ terraform_dir }}"
+        state: present
+        force_init: false
+        lock: false
+
+    - name: Wait for SSH to become available on VM
+      wait_for:
+        host: 127.0.0.1
+        port: 50022
+        delay: 5
+        timeout: 120
+
+- name: Configure and deploy app
+  hosts: all
+  become: yes
+  gather_facts: yes
+
+  roles:
+    - role: docker_setup
+    - role: app_deploy
+

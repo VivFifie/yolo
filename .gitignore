@@ -7,3 +7,6 @@ vault.yml
 .vscode
 .vscode/*
 .vscode/*.json
+.terraform/
+.terraform.lock.hcl
+terraform.tfstate.backup
