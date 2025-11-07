@@ -18,7 +18,7 @@ We will be maintaining the MongoDB as  was used in the docker deployment for con
 The headless service i.e clusterIP: None allows backend pods to directly connect to MongoDB using its DNS name:
 
 
-##Application Tier:
+##Backend Application Tier:
 
  #Deployment:
 
@@ -38,5 +38,41 @@ The backend runs as a Deployment, which provides:
 
 The Backend Service provides a stable network endpoint for accessing the backend pods within the Kubernetes cluster.To ensure consistent communication between services and with external users, a Service object is used.
 
-For local testing, the backend service is exposed as a NodePort. However for production we will be Loadbalancer 
+The service is using a LoadBalancer which provisions an external IP that automatically routes traffic to the correct pods.It ensures easier deployment to production on GCP.
+
+##Frontend Tier:
+
+#Deployment:
+
+The frontend also runs as a deployment. It has 2 replicas to ensure high availability and load distribution.
+It is exposed on port 3000
+Environment variables have also been used to dynamically point the frontend to the internal backend service within the cluster.
+
+#Service:
+
+The service is using a LoadBalancer which provisions an external IP that automatically routes traffic to the correct pods.It ensures easier deployment to production on GCP.
+
+The following ports have been mapped:
+
+Service Port: 80
+
+Target Port: 3000
+
+
+#Testing:
+
+ To test the application run:
+
+minikube tunnel  :This allows Minikube to simulate a real LoadBalancer by assigning an external IP to your service.
+
+ Then 
+
+ kubectl get svc -n yolo-app  :To get your external ip
+
+
+The frontend application opens on http://external-ip
+
+Proceed to add you product.
+
+
 
