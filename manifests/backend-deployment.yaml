@@ -17,11 +17,12 @@ spec:
     spec:
       containers:
         - name: backend
-          image: vivfifie/yolo
+          image: docker.io/vivfifie/yolo:v1.0.0
           ports:
             - containerPort: 5000
           env:
-            - name: MONGO_URL
-              value: mongodb://mongo.yolo-app.svc.cluster.local:27017/yolo
+            - name: MONGODB_URI
+              value: "mongodb://mongo.yolo-app.svc.cluster.local:27017/yolomy"
             - name: PORT
               value: "5000"
+
