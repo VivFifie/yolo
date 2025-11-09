@@ -75,4 +75,62 @@ The frontend application opens on http://external-ip
 Proceed to add you product.
 
 
+## GCP Cluster Setup – Step by Step
+
+This section outlines the process of setting up the YOLO application on Google Kubernetes Engine (GKE) using Google Cloud Shell.
+
+## Authenticate and Set Up GCP Environment
+
+Open Google Cloud Shell from the GCP Console and make sure you are authenticated.
+
+gcloud auth login
+
+Set active profile:
+
+gcloud config set project <YOUR_PROJECT_ID>
+
+Verify project configuration:
+
+gcloud config list
+
+Create cluster, Autopilot or Standard for the assignment willbe using Autopilot
+
+gcloud container clusters create-auto autopilot-cluster-1 --region us-central1
+
+Connect to cluster:
+
+gcloud container clusters get-credentials autopilot-cluster-1 --region us-central1
+
+Create namespace:
+
+kubectl create namespace yolo-app
+
+Switch context to use our namespace:
+
+kubectl config set-context --current --namespace=yolo-app
+
+Clone our working repository:
+
+git clone https://github.com/VivFifie/yolo.git
+
+cd yolo/manifests
+
+Deploy all services:
+
+kubectl apply -f .
+
+Verify all componets have been deployed:
+
+kubectl get all
+
+NAME       TYPE           CLUSTER-IP       EXTERNAL-IP     PORT(S)          AGE
+backend    LoadBalancer   34.118.236.15    34.29.26.124    5000:31796/TCP   4m
+frontend   LoadBalancer   34.118.225.163   35.238.24.242   80:31453/TCP     4m
+mongo      ClusterIP      None             <none>          27017/TCP  
+
+Test the deployement:
+
+Backend:  curl http://34.29.26.124:5000/api/products
+
+Frontend: http://35.238.24.242
 
